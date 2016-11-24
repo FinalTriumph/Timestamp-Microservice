@@ -20,8 +20,12 @@ app.get("/", function(req, res){
 app.get("/:time", function(req, res){
    if (!isNaN(req.params.time)){
        var nat = natural(req.params.time);
+       if (nat == "undefined NaN, NaN") {
+           res.json({unix: null, natural: null});
+       } else {
        var full = {unix: Number(req.params.time), natural: nat};
-       res.json(full);
+           res.json(full);
+       }
    } else {
        var timeUn = new Date(req.params.time);
        if (!isNaN(timeUn)){
